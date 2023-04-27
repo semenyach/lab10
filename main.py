@@ -1,29 +1,29 @@
 import json
 file='file.json'
 a=''
-def avail():
-    if tov['available']== True:
+def avail(x):
+    if x== True or x==1 or x=='Да' or 'да':
         return 'В наличии'
     else:
         return 'Нет в наличии!'
 with open(file, encoding='utf-8 ') as js:
     dict=json.load(js)
     name=input('Введите название')
-    price=input('Введите Цену')
-    weight=input('Введите вес')
+    price=int(input('Введите Цену'))
+    weight=int(input('Введите вес'))
     available=bool(input('В наличии?'))
     dict['products'].append({
         'name': name,
         'price': price,
         'weight': weight,
-        'available': available,
+        'available': avail(available),
     })
     with open('file.json', 'w') as outfile:
-        json.dump(dict, outfile, sort_keys=True, indent=4)
+        json.dump(dict, outfile, indent=4)
     for tov in dict['products']:
             a+='Название: '+ str(tov['name'])+ '\n'
             a += 'Цена: ' + str(tov['price']) + '\n'
             a += 'Вес: ' + str(tov['weight']) + '\n'
-            a += avail() + '\n\n'
+            a += avail(tov['available']) + '\n\n'
 
 print(a)
